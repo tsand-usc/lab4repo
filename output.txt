@@ -1,0 +1,4 @@
+Linear Search took 84 loops
+39 53 66 68 71 99 190 420 770 960 
+Index: 5
+Binary Search took 3 loops
