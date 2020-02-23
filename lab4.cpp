@@ -15,20 +15,13 @@ class matrix{
       
 };
 
-void matrix::print_row(int row){
+matrix::matrix(int filler){ 
    
-   for(int i = 0; i < 10; i++){
-       std::cout << " " << value[row][i];
-   }
-      std::cout << std::endl;   
-}
-
-matrix::matrix(int filler){ //why is this input necessary?
-  
+   // uses the same file reading code I wrote for the last lab
    int i = 0; 
    int bin; 
    std::string line;  // space to take in one line
-   std::ifstream input("input2.txt"); // input file
+   std::ifstream input("input.txt"); // input file
  
    while(getline(input, line)){ // runs through all lines
      //std::cout << line << std::endl;
@@ -41,15 +34,6 @@ matrix::matrix(int filler){ //why is this input necessary?
    }
     
    input.close();  // close the file
-  
-   /*
-   for(int i = 0; i < 20; i++){
-      for(int j = 0; j < 10; j++){
-         value[i][j] = filler; 
-      }
-   }
-   */
-   
 }
 
 int matrix::linear_search(int *loops){ // adjust for this application
@@ -124,42 +108,19 @@ int matrix::binary_search(int row, int *loops){ // look over this
 }
 
 //===================================================
-// identical read function from my Lab3 code since the input file has the same structure
-/*
-void read(matrix obj){
 
-   int i = 0; 
-   int bin; 
-   std::string line;  // space to take in one line
-   std::ifstream input("input.txt"); // input file
-    
-   while(getline(input, line)){ // runs through all lines
-     std::cout << line << std::endl;
-     std::stringstream digits(line); // makes an input from the string
-     for(int j = 0; j < 10; j++){ // runs through all the values
-        digits >> obj.value[i][j]; // puts the values in a place
-        std::cout << obj.value[i][j] << std::endl; 
-     }
-     i++;  // moves forward one set 
-   }
-    
-   input.close();  // close the file
-
-}
-*/
-
-
-void print(matrix obj, int row, int bloops, int lloops, int index){ // this needs to be modified for the correct output
+void print(matrix obj, int row, int bloops, int lloops, int index){ 
     
    std::ofstream output ("output.txt"); // opens output file
    
-   output << "Linear Search took " << lloops << " loops" << std::endl; 
-   for(int i = 0; i < 10; i++){
-       output << obj.value[row][i] << " ";
+   output << lloops << std::endl; // linear search loops
+   for(int i = 0; i < 9; i++){ // the row
+      
+       output << obj.value[row][i] << ",";
    }
-   output << std::endl;
-   output << "Index: " << index << std::endl;
-   output << "Binary Search took " << bloops << " loops" << std::endl;
+   output << obj.value[row][9] << std::endl; // last row element
+   output << index << std::endl; // the index
+   output << bloops << std::endl; // the number of binary search loops
    
      
    output.close();  // close the file
@@ -176,15 +137,15 @@ int main(){
   int lsearchLoops = 0; 
   int bsearchLoops = 0; 
       
-  matrix test(0);
+  matrix test(0); // creates array
     
-  searchrow = test.linear_search(&lsearchLoops); 
+  searchrow = test.linear_search(&lsearchLoops); // linear search, return the row
   
-  test.sort_row(searchrow); 
+  test.sort_row(searchrow); // sort that row
   
-  index = test.binary_search(searchrow, &bsearchLoops);
+  index = test.binary_search(searchrow, &bsearchLoops); // binary search that row, return that index
   
-  print(test, searchrow, bsearchLoops, lsearchLoops, index); 
+  print(test, searchrow, bsearchLoops, lsearchLoops, index); // print all this info
    
   return 0; 
 }
